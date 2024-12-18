@@ -18,11 +18,11 @@ export default function Slider() {
             const slidersCollection = collection(db, 'Sliders');
             const snapshot = await getDocs(slidersCollection); // Use getDocs here
             snapshot.forEach(doc => {
-                console.log(doc.id, " => ", doc.data());
+                //console.log(doc.id, " => ", doc.data());
                 setsliderList(sliderList=>[...sliderList,doc.data()])
             });
         } catch (error) {
-            console.error("Error fetching documents: ", error);
+            //console.error("Error fetching documents: ", error);
         }
     }
 
