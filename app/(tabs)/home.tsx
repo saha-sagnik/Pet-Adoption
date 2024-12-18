@@ -1,26 +1,49 @@
-import { View, Text } from 'react-native'
-import React from 'react'
-import Header from '@/components/Home/Header'
-import Slider from '@/components/Home/Slider'
-import CategoryList from '@/components/Home/PetListByCategory'
+import React from 'react';
+import { View, Text, ScrollView } from 'react-native';
+import Header from '@/components/Home/Header';
+import Slider from '@/components/Home/Slider';
+import CategoryList from '@/components/Home/PetListByCategory';
+import MaterialIcons from '@expo/vector-icons/MaterialIcons';
+import Colors from '@/constants/Colors';
 
 export default function HOME() {
   return (
-    <View
-    style={{
-      padding:'4%',
-      marginTop:'2%'
-  }}>
+    <ScrollView
+      style={{
+        flex: 1,
+      }}
+      contentContainerStyle={{
+        padding: '4%',
+        paddingTop: '2%'
+      }}
+    >
       {/* Header */}
-      <Header/>
+      <Header />
 
       {/* Slider */}
-      <Slider/>
+      <Slider />
 
-      {/* Category */}
-      <CategoryList/>
+      {/* Category List */}
+      <CategoryList />
 
-      {/* List of Pets */}
-    </View>
-  )
+      {/* Add a new pet */}
+      <View
+        style={{
+          flexDirection: 'row',
+          alignItems: 'center',
+          padding: 20,
+          marginTop: 20,
+          backgroundColor: Colors.GRAY,
+          borderStyle: 'dashed',
+          borderWidth: 1,
+          borderColor: Colors.PRIMARY,
+          borderRadius: 15,
+          justifyContent:'center'
+        }}
+      >
+        <MaterialIcons name="pets" size={24} color="orange" />
+        <Text style={{ marginLeft: 10 }}>Add New Pet</Text>
+      </View>
+    </ScrollView>
+  );
 }
