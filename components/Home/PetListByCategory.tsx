@@ -12,13 +12,16 @@ interface Pet {
   category: string;
   imageUrl: string;
   sex: string;
+  about: string;
+  address: string
 }
 
 export default function CategoryList() {
   const [petList, setPetList] = useState<Pet[]>([])
 
-  const [loader,setloader] = useState(false)
+  
 
+  const [loader,setloader] = useState(false)
     useEffect(() => {
       GetPetList('Dogs');
     }, []);
@@ -36,7 +39,8 @@ export default function CategoryList() {
               age: data.age,
               category: data.category,
               imageUrl: data.imageUrl,
-              sex: data.sex
+              sex: data.sex,
+              about:data.about,
           } as Pet; 
       });
       setloader(false);
@@ -44,6 +48,7 @@ export default function CategoryList() {
   };
 
     return (
+      
         <View
        style={{
         marginTop: 5,

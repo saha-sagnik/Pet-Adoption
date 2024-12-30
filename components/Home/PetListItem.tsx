@@ -1,13 +1,16 @@
 import Colors from "@/constants/Colors";
-import { Text, Image, View } from "react-native";
+import { useRouter } from "expo-router";
+import { Text, Image, View, TouchableOpacity } from "react-native";
 
 interface Pet {
+    about: string,
     age: string;
     breed: string;
     category: string;
     imageUrl: string;
     name: string;
     sex: string;
+    address: string
 }
 
 interface PetListItemProps {
@@ -15,8 +18,20 @@ interface PetListItemProps {
 }
 
 const PetListItem: React.FC<PetListItemProps> = ({ pet }) => {
+    //console.log('Pet data before navigation:', pet);
+    const router = useRouter();
+
     return (
-        <View
+        <TouchableOpacity
+
+        onPress={() => {
+            console.log('Navigating to /pet-details/index');
+            router.push({
+            pathname: '/pet-details',
+              params:{...pet}
+            });
+        }}
+        
         style={{
             padding:10,
             marginRight:15,
@@ -61,7 +76,7 @@ const PetListItem: React.FC<PetListItemProps> = ({ pet }) => {
 </Text>
             </View>
             
-        </View>
+        </TouchableOpacity>
     );
 }
 
