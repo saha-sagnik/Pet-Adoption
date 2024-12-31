@@ -1,5 +1,6 @@
 import { View, Text, Image } from 'react-native';
 import React from 'react';
+import Ionicons from '@expo/vector-icons/Ionicons';
 
 interface Pet {
   about: string,
@@ -9,7 +10,8 @@ interface Pet {
   imageUrl: string;
   name: string;
   sex: string;
-  address: string
+  address: string;
+  weight: number;
 }
 
 // Here, pet should be destructured from props
@@ -25,7 +27,12 @@ const PetInfo: React.FC<{ pet: Pet }> = ({ pet }) => {
         }}
       />
       <View style={{
-        padding: 20
+        padding: 25,
+        paddingBottom: 5,
+        display: "flex",
+        flexDirection: "row",
+        justifyContent: "space-between",
+        alignItems: "center"
       }}>
         <View>
           <Text
@@ -36,13 +43,18 @@ const PetInfo: React.FC<{ pet: Pet }> = ({ pet }) => {
           >
             {pet.name}
           </Text>
-          <Text
+          {/* <Text
             style={{
               fontSize: 20,
             }}
           >
             {pet.address}
-          </Text>
+          </Text> */}
+        </View>
+        <View
+       
+        >
+            <Ionicons name="heart-outline" size={24} color="black" />
         </View>
       </View>
 

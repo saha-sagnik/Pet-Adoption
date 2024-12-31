@@ -10,7 +10,8 @@ interface Pet {
     imageUrl: string;
     name: string;
     sex: string;
-    address: string
+    address: string;
+    weight: number;
 }
 
 interface PetListItemProps {

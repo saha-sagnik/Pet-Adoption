@@ -13,7 +13,8 @@ interface Pet {
   imageUrl: string;
   sex: string;
   about: string;
-  address: string
+  address: string;
+  weight: number;
 }
 
 export default function CategoryList() {
