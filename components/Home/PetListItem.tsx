@@ -2,8 +2,14 @@ import Colors from "@/constants/Colors";
 import { useRouter } from "expo-router";
 import { Text, Image, View, TouchableOpacity } from "react-native";
 
-interface Pet {
-    about: string,
+interface User {
+    name: string;
+    email: string;
+    imageUrl: string;
+  }
+  
+  interface Pet {
+    about: string;
     age: string;
     breed: string;
     category: string;
@@ -12,7 +18,9 @@ interface Pet {
     sex: string;
     address: string;
     weight: number;
-}
+    user?: User;
+  }
+  
 
 interface PetListItemProps {
     pet: Pet;
@@ -29,7 +37,7 @@ const PetListItem: React.FC<PetListItemProps> = ({ pet }) => {
             console.log('Navigating to /pet-details/index');
             router.push({
             pathname: '/pet-details',
-              params:{...pet}
+            params: { pet: JSON.stringify(pet) },
             });
         }}
         

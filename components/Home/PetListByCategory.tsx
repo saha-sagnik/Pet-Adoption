@@ -5,17 +5,25 @@ import { collection, getDocs, query, where } from 'firebase/firestore';
 import { db } from '@/config/FirebaseConfig';
 import PetListItem from './PetListItem';
 
-interface Pet {
+interface User {
   name: string;
-  breed: string;
+  email: string;
+  imageUrl: string;
+}
+
+interface Pet {
+  about: string;
   age: string;
+  breed: string;
   category: string;
   imageUrl: string;
+  name: string;
   sex: string;
-  about: string;
   address: string;
   weight: number;
+  user?: User;
 }
+
 
 export default function CategoryList() {
   const [petList, setPetList] = useState<Pet[]>([])
@@ -28,25 +36,36 @@ export default function CategoryList() {
     }, []);
 
     const GetPetList = async (category: string) => {
-      setloader(true)
-      const q = query(collection(db, 'Pets'), where('category', '==', category));
-      const querySnapshot = await getDocs(q);
-      const pets = querySnapshot.docs.map(doc => {
-     
+      try {
+        setloader(true);
+        const q = query(collection(db, 'Pets'), where('category', '==', category));
+        const querySnapshot = await getDocs(q);
+        const pets = querySnapshot.docs.map(doc => {
           const data = doc.data();
+          //console.log("Data:", JSON.stringify(data));
           return {
-              name: data.name,
-              breed: data.breed,
-              age: data.age,
-              category: data.category,
-              imageUrl: data.imageUrl,
-              sex: data.sex,
-              about:data.about,
-          } as Pet; 
-      });
-      setloader(false);
-      setPetList(pets); 
-  };
+            name: data.name,
+            breed: data.breed,
+            age: data.age || 'Not specified',  
+            category: data.category,
+            imageUrl: data.imageUrl,
+            sex: data.sex || 'Not specified',
+            about: data.about || 'No bio available',
+            address: data.address || 'No address provided',
+            weight: data.weight || 0,
+            user: data.user || { name: 'Unknown', email: 'No email provided', imageUrl: 'default_image_url' }
+          } as Pet;
+        });
+        setPetList(pets);
+        //console.log("Pets set in state:", JSON.stringify(pets));
+      } catch (error) {
+        console.error("Failed to fetch pets:", error);
+      } finally {
+        setloader(false);
+      }
+    };
+    
+    
 
     return (
       

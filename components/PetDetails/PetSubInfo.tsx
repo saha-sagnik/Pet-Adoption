@@ -2,8 +2,14 @@ import { View, Text, Image } from 'react-native'
 import React from 'react'
 import Colors from '@/constants/Colors';
 
-interface Pet {
-    about: string,
+interface User {
+    name: string;
+    email: string;
+    imageUrl: string;
+  }
+  
+  interface Pet {
+    about: string;
     age: string;
     breed: string;
     category: string;
@@ -12,7 +18,10 @@ interface Pet {
     sex: string;
     address: string;
     weight: number;
+    user?: User;
   }
+  
+
 
 const PetSubInfo: React.FC<{pet: Pet}>=({pet})=> {
   return (
