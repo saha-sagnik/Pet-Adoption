@@ -9,6 +9,7 @@ interface User {
 }
 
 interface Pet {
+  id:number;
   about: string;
   age: string;
   breed: string;
@@ -66,7 +67,7 @@ const PetInfo: React.FC<{ pet: Pet }> = ({ pet }) => {
         <View
        
         >
-          <MarkFav pet={pet}/>
+          <MarkFav color='' pet={pet}/>
         </View>
       </View>
 

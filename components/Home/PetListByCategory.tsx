@@ -88,7 +88,7 @@ export default function CategoryList() {
                   style={styles.petListItemContainer}
                   >
                     <PetListItem
-
+                    color=''
                     pet={item} />
                     </View>
                 )}

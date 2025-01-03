@@ -5,12 +5,17 @@ import { GetFavList, updateFav } from "../../shared/Shared";
 import { useUser } from "@clerk/clerk-expo";
 
 interface Pet {
-  id: number;
+  id: number; 
 }
 
-export default function MarkFav({ pet }: { pet: Pet }) {
+interface MarkFavProps {
+  pet: Pet;
+  color: string; 
+}
+
+export default function MarkFav({ pet, color }: MarkFavProps) {
   const { user } = useUser();
-  const [favList, setFavList] = useState<number[]>([]); // Typed as number[]
+  const [favList, setFavList] = useState<number[]>([]);
 
   useEffect(() => {
     if (user) {
@@ -21,43 +26,40 @@ export default function MarkFav({ pet }: { pet: Pet }) {
   const GetFav = async () => {
     try {
       const result = await GetFavList(user);
-      console.log("Favorite List:", result);
+      //console.log("Favorite List:", result);
       setFavList(result?.favorites ?? []);
     } catch (error) {
-      console.error("Error fetching favorite list:", error);
+      //console.error("Error fetching favorite list:", error);
     }
   };
 
   const AddToFav = async () => {
     try {
       if (!pet?.id) {
-        console.error("Pet ID is undefined");
+        //console.error("Pet ID is undefined");
         return;
       }
 
-      // Append pet.id to the favorites list
       const updatedFavList = [...favList, pet.id];
-      console.log("Favorites being updated:", updatedFavList);
+      //console.log("Favorites being updated:", updatedFavList);
 
-      // Update Firestore and local state
       await updateFav(user, updatedFavList);
-      setFavList(updatedFavList); // Update local state
-      console.log("Added to favorites:", updatedFavList);
+      setFavList(updatedFavList);
+      //console.log("Added to favorites:", updatedFavList);
     } catch (error) {
-      console.error("Error adding to favorites:", error);
+      //console.error("Error adding to favorites:", error);
     }
   };
 
   const removeFav = async () => {
     try {
       const updatedFavList = favList.filter((item) => item !== pet.id);
-      console.log("Favorites after removal:", updatedFavList);
+      //console.log("Favorites after removal:", updatedFavList);
 
-      // Update Firestore and local state
       await updateFav(user, updatedFavList);
-      setFavList(updatedFavList); // Update local state
+      setFavList(updatedFavList);
     } catch (error) {
-      console.error("Error removing favorite:", error);
+      //console.error("Error removing favorite:", error);
     }
   };
 
@@ -69,7 +71,7 @@ export default function MarkFav({ pet }: { pet: Pet }) {
         </Pressable>
       ) : (
         <Pressable onPress={AddToFav}>
-          <Ionicons name="heart-outline" size={30} color="black" />
+          <Ionicons name="heart-outline" size={30} color={color} />
         </Pressable>
       )}
     </View>
