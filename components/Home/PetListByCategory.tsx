@@ -21,6 +21,7 @@ interface Pet {
   sex: string;
   address: string;
   weight: number;
+  id: number;
   user?: User;
 }
 
@@ -42,7 +43,7 @@ export default function CategoryList() {
         const querySnapshot = await getDocs(q);
         const pets = querySnapshot.docs.map(doc => {
           const data = doc.data();
-          //console.log("Data:", JSON.stringify(data));
+          console.log("Data:", JSON.stringify(data));
           return {
             name: data.name,
             breed: data.breed,
@@ -53,11 +54,12 @@ export default function CategoryList() {
             about: data.about || 'No bio available',
             address: data.address || 'No address provided',
             weight: data.weight || 0,
+            id: data.id,
             user: data.user || { name: 'Unknown', email: 'No email provided', imageUrl: 'default_image_url' }
           } as Pet;
         });
         setPetList(pets);
-        //console.log("Pets set in state:", JSON.stringify(pets));
+        console.log("Pets set in state:", JSON.stringify(pets));
       } catch (error) {
         console.error("Failed to fetch pets:", error);
       } finally {

@@ -1,6 +1,6 @@
 import { View, Text, Image } from 'react-native';
 import React from 'react';
-import Ionicons from '@expo/vector-icons/Ionicons';
+import MarkFav from './MarkFav';
 
 interface User {
   name: string;
@@ -27,6 +27,7 @@ const PetInfo: React.FC<{ pet: Pet }> = ({ pet }) => {
   //console.log("Pet info received in component:", pet);
  // console.log("Pet User:", pet.user?.name, "Email:", pet.user?.email);
 
+ 
 
   return (
     <View>
@@ -65,7 +66,7 @@ const PetInfo: React.FC<{ pet: Pet }> = ({ pet }) => {
         <View
        
         >
-            <Ionicons name="heart-outline" size={24} color="black" />
+          <MarkFav pet={pet}/>
         </View>
       </View>
 
