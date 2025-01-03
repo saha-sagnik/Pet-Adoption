@@ -26,9 +26,10 @@ interface Pet {
 interface PetListItemProps {
   pet: Pet;
   color: string;
+  onRemove: () => void;
 }
 
-const PetListItem: React.FC<PetListItemProps> = ({ pet }) => {
+const PetListItem: React.FC<PetListItemProps> = ({ pet, color, onRemove }) => {
   const router = useRouter();
 
   return (
