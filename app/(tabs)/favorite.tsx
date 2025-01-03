@@ -19,6 +19,7 @@ export default function Favorite() {
   const { user } = useUser();
   const [favIds, setFavIds] = useState<string[]>([]);
   const [favPets, setFavPets] = useState<Pet[]>([]);
+  const [loader, setLoader] = useState(false);
 
   useEffect(() => {
     if (user) {
@@ -27,6 +28,7 @@ export default function Favorite() {
   }, [user]);
 
   const GetFavPetids = useCallback(async () => {
+    setLoader(true);
     try {
       const result = await GetFavList(user);
       const ids = result?.favorites ?? [];
@@ -34,9 +36,13 @@ export default function Favorite() {
 
       if (ids.length > 0) {
         GetFavPetList(ids);
+      } else {
+        setFavPets([]); // Clear pets if no favorites exist
       }
     } catch (error) {
       console.error("Error fetching favorite IDs:", error);
+    } finally {
+      setLoader(false);
     }
   }, [user]);
 
@@ -70,10 +76,17 @@ export default function Favorite() {
       >
         Favorites
       </Text>
+      {!favPets.length && !loader && (
+        <Text style={{ textAlign: "center", marginTop: 20 }}>
+          No favorites added yet.
+        </Text>
+      )}
       <FlatList
         data={favPets}
         keyExtractor={(item) => item.id}
         numColumns={2}
+        onRefresh={GetFavPetids}
+        refreshing={loader}
         renderItem={({ item }) => (
           <View>
             <PetListItem color="black" pet={item} />
