@@ -43,7 +43,7 @@ export default function CategoryList() {
         const querySnapshot = await getDocs(q);
         const pets = querySnapshot.docs.map(doc => {
           const data = doc.data();
-          console.log("Data:", JSON.stringify(data));
+          //console.log("Data:", JSON.stringify(data));
           return {
             name: data.name,
             breed: data.breed,
@@ -59,7 +59,7 @@ export default function CategoryList() {
           } as Pet;
         });
         setPetList(pets);
-        console.log("Pets set in state:", JSON.stringify(pets));
+        //console.log("Pets set in state:", JSON.stringify(pets));
       } catch (error) {
         console.error("Failed to fetch pets:", error);
       } finally {
@@ -88,6 +88,7 @@ export default function CategoryList() {
                   style={styles.petListItemContainer}
                   >
                     <PetListItem
+                    
                     color=''
                     pet={item} />
                     </View>
