@@ -16,9 +16,8 @@ import { Picker } from "@react-native-picker/picker";
 import { addDoc, collection, getDocs } from "firebase/firestore";
 import { db } from "@/config/FirebaseConfig";
 import * as ImagePicker from "expo-image-picker";
+import Constants from 'expo-constants';
 
-import { CLOUDINARY_UPLOAD_PRESET, CLOUDINARY_CLOUD_NAME } from "@env";
-import { useURL } from "expo-linking";
 import { useUser } from "@clerk/clerk-expo";
 
 interface Category {
@@ -26,6 +25,9 @@ interface Category {
 }
 
 export default function AddNewPet() {
+
+  const { cloudinaryUploadPreset, cloudinaryCloudName } = Constants.manifest.extra;
+
   const navigation = useNavigation();
 
   const [formData, setFormData] = useState<{
@@ -46,7 +48,8 @@ export default function AddNewPet() {
   const [gender, setGender] = useState<"Male" | "Female" | undefined>();
 
   const [image, setImage] = useState<string | null>(null);
-//console.log("CLOUDINARY_UPLOAD_PRESET:", CLOUDINARY_UPLOAD_PRESET);
+
+console.log("CLOUDINARY_UPLOAD_PRESET:", cloudinaryUploadPreset);
 
   const pickImage = async () => {
     try {
@@ -177,12 +180,12 @@ export default function AddNewPet() {
       type: "image/jpeg",
       name: "upload.jpg",
     } as any);
-    formData.append("upload_preset", CLOUDINARY_UPLOAD_PRESET);
+    formData.append("upload_preset", cloudinaryUploadPreset);
 
     try {
       console.log("Uploading image to Cloudinary...");
       const response = await fetch(
-        `https://api.cloudinary.com/v1_1/${CLOUDINARY_CLOUD_NAME}/image/upload`,
+        `https://api.cloudinary.com/v1_1/${cloudinaryCloudName}/image/upload`,
         {
           method: "POST",
           body: formData,
