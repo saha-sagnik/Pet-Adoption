@@ -9,15 +9,17 @@ import {
   ToastAndroid,
 } from "react-native";
 import React, { useEffect, useState } from "react";
-import { useNavigation } from "expo-router";
+import { router, useNavigation } from "expo-router";
 import Colors from "@/constants/Colors";
 import { StyleSheet } from "react-native";
 import { Picker } from "@react-native-picker/picker";
-import { collection, getDocs } from "firebase/firestore";
+import { addDoc, collection, getDocs } from "firebase/firestore";
 import { db } from "@/config/FirebaseConfig";
 import * as ImagePicker from "expo-image-picker";
 
 import { CLOUDINARY_UPLOAD_PRESET, CLOUDINARY_CLOUD_NAME } from "@env";
+import { useURL } from "expo-linking";
+import { useUser } from "@clerk/clerk-expo";
 
 interface Category {
   name: string;
@@ -38,12 +40,13 @@ export default function AddNewPet() {
     imageUrl?: string;
   }>({});
 
+  const user = useUser();
   const [categoryList, setCategoryList] = useState<Category[]>([]);
   const [selectedCategory, setSelectedCategory] = useState<string>("Dogs");
   const [gender, setGender] = useState<"Male" | "Female" | undefined>();
 
   const [image, setImage] = useState<string | null>(null);
-console.log("CLOUDINARY_UPLOAD_PRESET:", CLOUDINARY_UPLOAD_PRESET);
+//console.log("CLOUDINARY_UPLOAD_PRESET:", CLOUDINARY_UPLOAD_PRESET);
 
   const pickImage = async () => {
     try {
@@ -95,6 +98,19 @@ console.log("CLOUDINARY_UPLOAD_PRESET:", CLOUDINARY_UPLOAD_PRESET);
     }));
   };
 
+  const uploadDataToFirestore = async (data: any) => {
+    try {
+      // Assuming you have a collection named 'pets'
+      const newPetRef = await addDoc(collection(db, "Pets"), data); // Automatically generates a unique ID
+      console.log("Data successfully uploaded to Firestore with ID:", newPetRef.id);
+      ToastAndroid.show("Pet added successfully!", ToastAndroid.LONG);
+    } catch (error) {
+      console.error("Error uploading data to Firestore:", error);
+      ToastAndroid.show("Failed to add pet. Please try again.", ToastAndroid.SHORT);
+    }
+  };
+  
+
   const handleSubmit = async () => {
     console.log("Submitting form...");
     console.log("Form Data:", formData);
@@ -127,11 +143,25 @@ console.log("CLOUDINARY_UPLOAD_PRESET:", CLOUDINARY_UPLOAD_PRESET);
         return;
       }
 
-      const finalFormData = { ...formData, imageUrl };
+      const finalFormData = { ...formData, imageUrl,
+        // user: {
+        //   name: user?.fullName || "Unknown",
+        //   email: user?.primaryEmailAddress?.emailAddress || "Unknown",
+        //   image: user?.profileImageUrl || "https://via.placeholder.com/150" // Placeholder if image is missing
+        // }
+       };
       console.log("Final Form Data Submitted:", finalFormData);
 
-      // Show success message
-      ToastAndroid.show("Pet added successfully!", ToastAndroid.SHORT);
+      await uploadDataToFirestore(finalFormData);
+
+      setFormData({});
+      setImage(null);
+      setSelectedCategory("Dogs");
+      setGender(undefined);
+
+      // Redirect to the homepage
+      router.push("/");
+
     } catch (error) {
       console.error("Error during form submission:", error);
       ToastAndroid.show("Something went wrong. Please try again.", ToastAndroid.SHORT);
