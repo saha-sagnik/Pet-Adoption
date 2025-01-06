@@ -26,7 +26,8 @@ interface Category {
 
 export default function AddNewPet() {
 
-  const { cloudinaryUploadPreset, cloudinaryCloudName } = Constants.manifest.extra;
+  const { cloudinaryUploadPreset, cloudinaryCloudName } = Constants.manifest?.extra || {};
+
 
   const navigation = useNavigation();
 
@@ -221,6 +222,12 @@ console.log("CLOUDINARY_UPLOAD_PRESET:", cloudinaryUploadPreset);
           <Image style={styles.image} source={{ uri: image }} />
         )}
       </Pressable>
+
+      <Text
+      style={{
+        fontWeight:600,
+      }}
+      >Add Photo</Text>
 
       <View style={styles.inputContainer}>
         <Text style={styles.label}>Pet Name *</Text>
