@@ -60,27 +60,28 @@ The Pet Adoption App is designed to streamline the process of adopting pets, pro
 
 - **Login Screen**
 
-![Login Screen ](./assets/images/loginPage.png)
+  <img src="./assets/images/loginPage.png" alt="Login Screen" width="300"/>
 
 - **Home Screen**
 
-  ![Home Screen 1](./assets/images/homePage.png)
-![Home Screen 2](./assets/images/homePage1.png)
+  <img src="./assets/images/homePage.png" alt="Home Screen 1" width="300"/>
+  <img src="./assets/images/homePage1.png" alt="Home Screen 2" width="300"/>
 
 - **Pet Profile**
-  ![Pet Profile](./assets/images/petProfile.png)
+  <img src="./assets/images/petProfile.png" alt="Pet Profile" width="300"/>
 
 - **Add Pet**
-  ![Add Pet](./assets/images/addnewPet.png)
+  <img src="./assets/images/addnewPet.png" alt="Add Pet" width="300"/>
 
 - **Favorites**
-  ![Favorites](./assets/images/favorites.png)
+  <img src="./assets/images/favorites.png" alt="Favorites" width="300"/>
 
 - **Chat Feature**
-  ![Chat Feature](./assets/images/chats.png)
+  <img src="./assets/images/chats.png" alt="Chat Feature" width="300"/>
 
-  - **User Profile Screen**
-  ![User Profile Page](./assets//images/profileSection.png)
+- **User Profile Screen**
+  <img src="./assets/images/profileSection.png" alt="User Profile Page" width="300"/>
+
 
 ### Built With
 
