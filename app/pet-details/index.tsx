@@ -84,11 +84,12 @@ export default function PetDetails() {
             name: pet?.user?.name || "Unknown",
           },
         ],
+        userIds:[userEmail,petOwnerEmail]
       });
   
       // Redirect to the new chat
       router.push({
-        pathname: "/chat/index",
+        pathname: "/chat",
         params: { id: docId1 },
       });
     } catch (error) {
