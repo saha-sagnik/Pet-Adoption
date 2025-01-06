@@ -1,4 +1,4 @@
-import { View, Text, Image, FlatList, TouchableOpacity, StyleSheet } from 'react-native'
+import { View, Text, Image, FlatList, TouchableOpacity, StyleSheet, ScrollView } from 'react-native'
 import React from 'react'
 import { useAuth, useUser } from '@clerk/clerk-expo'
 import Colors from '@/constants/Colors';
@@ -26,6 +26,12 @@ const Profile = () => {
       path: '/add-new-pet'
     },
     {
+      id:5,
+      name:'My Post',
+      icon: 'bookmark',
+      path: '/user-post'
+    },
+    {
       id: 2,
       name: 'Favorites',
       icon: 'heart',
@@ -51,11 +57,11 @@ const Profile = () => {
       signOut();
       return;
     }
-    router.push(item.path);
+    router.push('/login');
   };
 
   return (
-    <View style={styles.container}>
+    <ScrollView style={styles.container}>
       <Text style={styles.title}>Profile</Text>
       <View style={styles.profileInfo}>
         <Image source={{ uri: user?.imageUrl }} style={styles.profileImage} />
@@ -73,7 +79,15 @@ const Profile = () => {
           </TouchableOpacity>
         )}
       />
-    </View>
+
+        <View
+        style={{
+          padding:20,
+        }}>
+
+        </View>
+
+    </ScrollView>
   );
 };
 

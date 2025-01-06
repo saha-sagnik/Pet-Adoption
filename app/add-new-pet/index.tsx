@@ -315,6 +315,15 @@ console.log("CLOUDINARY_UPLOAD_PRESET:", cloudinaryUploadPreset);
       <TouchableOpacity style={styles.button} onPress={handleSubmit}>
         <Text style={styles.buttonText}>Submit</Text>
       </TouchableOpacity>
+
+          <View
+          style={{
+            padding:20
+          }}
+          >
+
+          </View>
+
     </ScrollView>
   );
 }
